@@ -111,12 +111,14 @@ describe('Signup', function () {
                   cy.get("@secondPrice").then((expectedPrice2) => {
                      let total = Number(text.replace("SAR", '').trim())
                      let expectedTotal = Number(expectedPrice1.replace("SAR", '').trim()) + Number(expectedPrice2.replace("SAR", '').trim())
+                     cy.wrap(expectedTotal).as('expectedTotal');
                      expect(total).to.be.eq(expectedTotal, `the expected price ${expectedTotal}   the actual ${total}`)
                   })
                })
             });
          cy.xpath("//*[@class='widget_shopping_cart_content']//a[text()='Checkout']").click()
          billing.fillBillingForm()
+
 
       })
 

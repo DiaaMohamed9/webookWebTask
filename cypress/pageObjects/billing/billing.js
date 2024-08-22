@@ -13,8 +13,24 @@ class Billing {
       this.billingPhone().type(billingData.phone)
       this.billingEmail().clear().type(billingData.email)
       cy.wait(4000)
+      cy.xpath("//*[@class='cart-subtotal']//bdi").invoke('text')
+         .then((text) => {
+            cy.get("@expectedTotal").then((expectedTotal) => {
+               expect(Number(text.replace("SAR", '').trim())).to.be.eq(expectedTotal, `the expected price ${expectedTotal}   the actual ${text.replace("SAR", '').trim()}`)
+            })
+         });
+      cy.xpath('//*[@id="shipping_method"]//bdi').invoke('text')
+         .then((text) => {
+            cy.get("@expectedTotal").then((expectedTotal) => {
+               cy.xpath(`//*[@class='order-total']//bdi`).invoke('text')
+                  .then((newtotal) => {
+                     expect(Number(newtotal.replace("SAR", '').trim())).to.be.eq(expectedTotal + Number(text.replace("SAR", '').trim()), `the expected price ${expectedTotal + text.replace("SAR", '').trim()}   the actual ${newtotal.replace("SAR", '').trim()}`)
+
+                  })
+            })
+         });
       this.billingSubmit().click()
-      cy.wait(40000000)
+      cy.wait(4000)
 
 
    }
