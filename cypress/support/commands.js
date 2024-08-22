@@ -23,9 +23,37 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+import Login from '../pageObjects/loginPage/login'
+import Header from '../pageObjects/headerPage/header'
+import Signup from '../pageObjects/signup/signup'
+const login = new Login()
+const header = new Header()
+const signup = new Signup()
 import "cypress-wait-until";
 Cypress.Commands.add('customeVisit', (url) => {
-    cy.window().then((win) => {
-      win.location.href = url;
-      });
+  cy.window().then((win) => {
+    win.location.href = url;
+  });
 });
+Cypress.Commands.add('signup', () => {
+
+
+  cy.session(
+    [],
+    () => {
+      cy.intercept('POST', 'https://api.webook.com/api/v2/register**').as('registerApi');
+
+      cy.visit('https://webook.com/en/login')
+      login.createAccountButton().should('be.visible').click()
+      signup.fillSigupForm()
+      cy.wait('@registerApi').its('response.statusCode').should('eq', 200);
+    },
+    {
+      validate() {
+        cy.visit('https://webook.com/shop/en/')
+        cy.xpath("//a[@title='My account']").should('be.visible')
+
+      },
+    }
+  )
+})
