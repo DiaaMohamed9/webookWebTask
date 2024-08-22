@@ -85,7 +85,7 @@ describe('Signup', function () {
                expect(text).to.be.eq(expectedPrice, `the expected price ${expectedPrice}   the actual ${text}`)
             })
          });
-      cy.xpath(`//label[text()='Size']/following::*[contains(@class,'wd-swatches-product')]/div[1]//span`).click({ force: true })
+      cy.xpath(`//*[@data-value and contains(@class,'enabled')][1]`).click()
       cy.wait(1000)
       cy.xpath(`//button[@type="submit" and contains(text(),'Add to cart') and not (contains(@class,'disabled'))]`).click()
       cy.xpath(`//*[@class='widget_shopping_cart_content']//a[text()='View cart']`).should('be.visible')
@@ -100,7 +100,7 @@ describe('Signup', function () {
                   expect(text).to.be.eq(expectedPrice, `the expected price ${expectedPrice}   the actual ${text}`)
                })
             });
-         cy.xpath(`//label[text()='Size']/following::*[contains(@class,'wd-swatches-product')]/div[1]//span`).click({ force: true })
+         cy.xpath(`//*[@data-value and contains(@class,'enabled')][1]`).click()
          cy.wait(1000)
 
          cy.xpath(`//button[@type="submit" and contains(text(),'Add to cart') and not (contains(@class,'disabled'))]`).click()
