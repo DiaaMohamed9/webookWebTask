@@ -56,7 +56,7 @@ class signup {
          email: faker.internet.email(),
          firstName: faker.name.firstName(),
          lastName: faker.name.lastName(),
-         mobile: '5' + this.generateRandomString(8),
+         mobile: '53' + this.generateRandomString(7),
          password: 'Test_Password_9',
          days: faker.datatype.number({ min: 1, max: 26 }),
          months: faker.datatype.number({ min: 1, max: 12 }),
