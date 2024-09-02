@@ -4,10 +4,11 @@
   "description": "Cypress Task",
   "main": "index.js",
   "scripts": {
-    "clean:reports": "shx rm -rf mochawesome-report/ && shx rm -rf TestReport/ && shx mkdir TestReport && shx mkdir TestReport/assets",
-    "test": "npm run clean:reports &&  npx cypress run && npm run generate:html:report",
-    "merge:reports": "mochawesome-merge mochawesome-report/*.json > cypress-tests-report.json",
-    "create:html:report": "marge --reportDir TestReport cypress-tests-report.json",
+    "clean:reports": "shx rm -rf mochawesome-report/*.json",
+    "setup:reportDir": "node setupReportDir.js",
+    "test": "npm run clean:reports && export REPORT_DIR=$(npm run setup:reportDir --silent) && npx cypress run || true && npm run generate:html:report",
+    "merge:reports": "mochawesome-merge $REPORT_DIR/*.json > $REPORT_DIR/cypress-tests-report.json",
+    "create:html:report": "marge --reportDir $REPORT_DIR $REPORT_DIR/cypress-tests-report.json",
     "generate:html:report": "npm run merge:reports && npm run create:html:report"
   },
   "dependencies": {
@@ -27,7 +28,9 @@
     "moment": "^2.29.4"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "cypress": "^13.3.0",
+    "cypress-mochawesome-reporter": "^3.8.2",
     "shx": "^0.3.4"
   }
 }
