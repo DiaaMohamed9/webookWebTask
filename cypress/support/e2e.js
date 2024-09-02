@@ -19,6 +19,7 @@ require("cypress-xpath");
 import "cypress-localstorage-commands";
 import { faker } from "@faker-js/faker";
 import "cypress-file-upload";
+import 'cypress-mochawesome-reporter/register';
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

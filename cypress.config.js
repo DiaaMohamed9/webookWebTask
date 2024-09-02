@@ -6,13 +6,22 @@ module.exports = defineConfig({
    video: true,
    viewportWidth: 1920,
    viewportHeight: 1080,
-   reporter: 'mochawesome',
+   reporter: 'cypress-mochawesome-reporter',
    reporterOptions: {
+      charts: true,
+      reportPageTitle: 'custom-title',
+      embeddedScreenshots: true,
+      inlineAssets: true,
+      saveAllAttempts: false,
       reportDir: process.env.REPORT_DIR || 'mochawesome-report',
-      overwrite: true,
-      html: false,
-      json: true
+
    },
+   // reporterOptions: {
+   //    reportDir: process.env.REPORT_DIR || 'mochawesome-report',
+   //    overwrite: true,
+   //    html: false,
+   //    json: true
+   // },
    screenshotsFolder: path.join(process.env.REPORT_DIR || 'mochawesome-report', 'assets'),
    screenshotOnRunFailure: true,
    chromeWebSecurity: false,
@@ -32,7 +41,9 @@ module.exports = defineConfig({
 
    e2e: {
       setupNodeEvents(on, config) {
+         require('cypress-mochawesome-reporter/plugin')(on);
          return require('./cypress/plugins/index.js')(on, config);
+
       },
       testIsolation: false,
    },
