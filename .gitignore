@@ -5,6 +5,6 @@
 /package-lock.json
 cypress/fixtures/*.json
 TestReport/
-cypress/fixtures/billingData.json
-cypress/fixtures/genratedData.json
+# cypress/fixtures/billingData.json
+# cypress/fixtures/genratedData.json
 cypress/videos/*.cy.js.mp4
