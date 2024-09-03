@@ -21,7 +21,7 @@ const billing = new Billing()
 
 // Test suite for signup functionality
 describe('Signup', function () {
-   before('', () => {
+   beforeEach('', () => {
       Cypress.on('uncaught:exception', () => {
          return false;
       });
