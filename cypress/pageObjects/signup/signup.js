@@ -10,7 +10,19 @@ class signup {
       cy.writeFile('cypress/fixtures/genratedData.json', genratedData)
       this.firstName().type(genratedData.firstName)
       this.lastName().type(genratedData.lastName)
-      this.email().type(genratedData.email)
+      cy.fixture('counter').then((data) => {
+         let counter = data.counter;
+
+         // Step 2: Increment the counter
+         counter += 1;
+         this.email().type(`test${counter}@gmail.com`)
+         cy.log(`Updated Counter: ${counter}`);
+
+         // Step 3: Save the updated counter back to the file
+         // You can't directly modify fixture files with Cypress commands, so we'll use Node.js code for this.
+         cy.writeFile('cypress/fixtures/counter.json', { counter: counter });
+      });
+
       this.confirmEmail().type(genratedData.email)
       this.password().type(genratedData.password)
       this.mobile().type(genratedData.mobile)
@@ -53,7 +65,7 @@ class signup {
    }
    generateSignupData() {
       return {
-         email: faker.internet.email().split("@")[0] + "@gmail.com",
+         email: faker.internet.email().toLowerCase().split("@")[0] + "42335@gmail.com",
          firstName: faker.name.firstName(),
          lastName: faker.name.lastName(),
          mobile: '53' + this.generateRandomString(7),
