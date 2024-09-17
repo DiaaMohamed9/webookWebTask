@@ -16,6 +16,8 @@ class signup {
          // Step 2: Increment the counter
          counter += 1;
          this.email().type(`test${counter}@gmail.com`)
+         this.confirmEmail().type(`test${counter}@gmail.com`)
+
          cy.log(`Updated Counter: ${counter}`);
 
          // Step 3: Save the updated counter back to the file
@@ -23,7 +25,6 @@ class signup {
          cy.writeFile('cypress/fixtures/counter.json', { counter: counter });
       });
 
-      this.confirmEmail().type(genratedData.email)
       this.password().type(genratedData.password)
       this.mobile().type(genratedData.mobile)
       this.agreeTerms().click({ force: true })
