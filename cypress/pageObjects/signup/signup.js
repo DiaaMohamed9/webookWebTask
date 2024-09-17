@@ -15,8 +15,8 @@ class signup {
 
          // Step 2: Increment the counter
          counter += 1;
-         this.email().type(`test${counter}@gmail.com`)
-         this.confirmEmail().type(`test${counter}@gmail.com`)
+         this.email().type(`mohamed${counter}@gmail.com`)
+         this.confirmEmail().type(`mohamed${counter}@gmail.com`)
 
          cy.log(`Updated Counter: ${counter}`);
 
