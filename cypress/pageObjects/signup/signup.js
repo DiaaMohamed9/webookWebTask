@@ -53,7 +53,7 @@ class signup {
    }
    generateSignupData() {
       return {
-         email: faker.internet.email(),
+         email: faker.internet.email().split("@")[0] + "@gmail.com",
          firstName: faker.name.firstName(),
          lastName: faker.name.lastName(),
          mobile: '53' + this.generateRandomString(7),
