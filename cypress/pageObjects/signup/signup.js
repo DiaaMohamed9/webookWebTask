@@ -10,19 +10,31 @@ class signup {
       cy.writeFile('cypress/fixtures/genratedData.json', genratedData)
       this.firstName().type(genratedData.firstName)
       this.lastName().type(genratedData.lastName)
-      cy.fixture('counter').then((data) => {
-         let counter = data.counter;
+      cy.fixture('counter').then((data1) => {
+         cy.fixture('emails').then((data) => {
+            let counter = data1.counter;
 
-         // Step 2: Increment the counter
-         counter += 1;
-         this.email().type(`mohamed${counter}@gmail.com`)
-         this.confirmEmail().type(`mohamed${counter}@gmail.com`)
+            // Step 2: Increment the counter
+            counter += 1;
+            const email = data.email[counter - 1];
 
-         cy.log(`Updated Counter: ${counter}`);
+            // Step 3: Log the email or use it in further testing
+            cy.log(`Email at line ${counter}: ${email}`);
+            this.email().type(`${email}`)
+            this.confirmEmail().type(`${email}`)
 
-         // Step 3: Save the updated counter back to the file
-         // You can't directly modify fixture files with Cypress commands, so we'll use Node.js code for this.
-         cy.writeFile('cypress/fixtures/counter.json', { counter: counter });
+            cy.log(`Updated Counter: ${counter}`);
+
+            // Step 3: Save the updated counter back to the file
+            // You can't directly modify fixture files with Cypress commands, so we'll use Node.js code for this.
+            cy.writeFile('cypress/fixtures/counter.json', { counter: counter });
+            // Step 2: Get the email at the specific index (subtract 1 to convert line number to index)
+
+
+            // Example usage: Use the email in your test, e.g., to fill out a form
+            // cy.get('#email-input').type(email);
+         });
+
       });
 
       this.password().type(genratedData.password)
