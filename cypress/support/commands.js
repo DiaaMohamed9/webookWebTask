@@ -35,7 +35,7 @@ Cypress.Commands.add('customeVisit', (url) => {
     win.location.href = url;
   });
 });
-Cypress.Commands.add('signup', () => {
+Cypress.Commands.add('signup', (counterr) => {
 
 
   cy.session(
@@ -45,7 +45,7 @@ Cypress.Commands.add('signup', () => {
 
       cy.visit('https://webook.com/en/login')
       login.createAccountButton().should('be.visible').click()
-      signup.fillSigupForm()
+      signup.fillSigupForm(counterr)
       cy.wait('@registerApi').its('response.statusCode').should('eq', 200);
     },
     {

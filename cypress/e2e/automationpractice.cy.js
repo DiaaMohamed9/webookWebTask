@@ -21,6 +21,8 @@ const billing = new Billing()
 
 // Test suite for signup functionality
 describe('Signup', function () {
+
+   let counter
    beforeEach('', () => {
       Cypress.on('uncaught:exception', () => {
          return false;
@@ -30,7 +32,12 @@ describe('Signup', function () {
 
       cy.clearAllLocalStorage()
       cy.clearAllCookies()
-      cy.signup()
+      cy.readFile('cypress/fixtures/counter.json').then((data) => {
+         counter = data.counter; // Read the counter from the file
+         cy.signup(counter)
+      });
+
+
 
       Cypress.config('defaultCommandTimeout', 15000)
 
