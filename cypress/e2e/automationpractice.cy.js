@@ -18,11 +18,11 @@ const header = new Header()
 const mail = new Mail()
 const signup = new Signup()
 const billing = new Billing()
-
+// let counter
 // Test suite for signup functionality
 describe('Signup', function () {
 
-   let counter
+
    beforeEach('', () => {
       Cypress.on('uncaught:exception', () => {
          return false;
@@ -33,8 +33,9 @@ describe('Signup', function () {
       cy.clearAllLocalStorage()
       cy.clearAllCookies()
       cy.readFile('cypress/fixtures/counter.json').then((data) => {
-         counter = data.counter; // Read the counter from the file
-         cy.signup(counter)
+         // let counter
+         // counter = data.counter; // Read the counter from the file
+         cy.signup(data.counter)
       });
 
 
@@ -62,6 +63,7 @@ describe('Signup', function () {
    //    // header.successAlert().should('be.visible')
    // })
    it('test shop', function () {
+      cy.wait(2000)
       cy.xpath("(//*[contains(@class,'product-wrapper')])[1]/parent::*[@data-id]//ins//*[contains(@class,'woocommerce-Price-amount')]").should('be.visible').invoke('text')
          .then((text) => {
             cy.wrap(text).as('firstPrice');
