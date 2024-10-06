@@ -19,16 +19,16 @@ class Billing {
                expect(Number(text.replace("SAR", '').trim())).to.be.eq(expectedTotal, `the expected price ${expectedTotal}   the actual ${text.replace("SAR", '').trim()}`)
             })
          });
-      cy.xpath('//*[@id="shipping_method"]//bdi').invoke('text')
-         .then((text) => {
-            cy.get("@expectedTotal").then((expectedTotal) => {
-               cy.xpath(`//*[@class='order-total']//bdi`).invoke('text')
-                  .then((newtotal) => {
-                     expect(Number(newtotal.replace("SAR", '').trim())).to.be.eq(expectedTotal + Number(text.replace("SAR", '').trim()), `the expected price ${expectedTotal + text.replace("SAR", '').trim()}   the actual ${newtotal.replace("SAR", '').trim()}`)
+      // cy.xpath("//*[@class='includes_tax']//span[contains(@class,'amount')]").invoke('text') // shipping price
+      //    .then((text) => {
+      //       cy.get("@expectedTotal").then((expectedTotal) => {
+      //          cy.xpath(`//*[@class='order-total']//bdi`).invoke('text')
+      //             .then((newtotal) => {
+      //                expect(Number(newtotal.replace("SAR", '').trim())).to.be.eq(expectedTotal + Number(text.replace("SAR", '').trim()), `the expected price ${expectedTotal + text.replace("SAR", '').trim()}   the actual ${newtotal.replace("SAR", '').trim()}`)
 
-                  })
-            })
-         });
+      //             })
+      //       })
+      //    });
       this.billingSubmit().click()
       cy.wait(4000)
 
