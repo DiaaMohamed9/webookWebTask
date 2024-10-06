@@ -63,7 +63,7 @@ describe('Signup', function () {
    //    // header.successAlert().should('be.visible')
    // })
    it('test shop', function () {
-      cy.wait(2000)
+      cy.wait(5000)
       cy.xpath("(//*[contains(@class,'product-wrapper')])[1]/parent::*[@data-id]//ins//*[contains(@class,'woocommerce-Price-amount')]").should('be.visible').invoke('text')
          .then((text) => {
             cy.wrap(text).as('firstPrice');
@@ -95,7 +95,7 @@ describe('Signup', function () {
             })
          });
       cy.xpath(`//*[@data-value and contains(@class,'enabled')][1]`).click()
-      cy.wait(1000)
+      cy.wait(5000)
       cy.xpath(`//button[@type="submit" and contains(text(),'Add to cart') and not (contains(@class,'disabled'))]`).click()
       cy.xpath(`//*[@class='widget_shopping_cart_content']//a[text()='View cart']`).should('be.visible')
 
@@ -110,7 +110,7 @@ describe('Signup', function () {
                })
             });
          cy.xpath(`//*[@data-value and contains(@class,'enabled')][1]`).click()
-         cy.wait(1000)
+         cy.wait(5000)
 
          cy.xpath(`//button[@type="submit" and contains(text(),'Add to cart') and not (contains(@class,'disabled'))]`).click()
          cy.xpath(`//*[@class='widget_shopping_cart_content']//a[text()='View cart']`).should('be.visible')
