@@ -51,7 +51,8 @@ Cypress.Commands.add('signup', (counterr) => {
     {
       validate() {
         cy.visit('https://webook.com/shop/en/')
-        cy.xpath("//a[@title='My account']").should('be.visible')
+        cy.xpath("//a[contains(@href,'/my-account') and *[contains(text(),'My Account')]]").should('be.visible')
+
 
       },
     }
