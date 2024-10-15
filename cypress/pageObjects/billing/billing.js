@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 var selectors = require('./selectors')
-
+const subTotal = `(//*[@class='cart-subtotal']//*[translate(text(), '0123456789', '') != text()])[last()]`
+const total = `(//*[@class='order-total']//*[contains(@class,'woocommerce-Price-amount')]//*[translate(text(), '0123456789', '') != text()])[last()]`
 class Billing {
    fillBillingForm() {
       let billingData = this.generateBillingData()
@@ -13,7 +14,13 @@ class Billing {
       this.billingPhone().type(billingData.phone)
       this.billingEmail().clear().type(billingData.email)
       cy.wait(4000)
-      cy.xpath("//*[@class='cart-subtotal']//bdi").invoke('text')
+      cy.xpath(subTotal).invoke('text')
+         .then((text) => {
+            cy.get("@expectedTotal").then((expectedTotal) => {
+               expect(Number(text.replace("SAR", '').trim())).to.be.eq(expectedTotal, `the expected price ${expectedTotal}   the actual ${text.replace("SAR", '').trim()}`)
+            })
+         });
+      cy.xpath(total).invoke('text')
          .then((text) => {
             cy.get("@expectedTotal").then((expectedTotal) => {
                expect(Number(text.replace("SAR", '').trim())).to.be.eq(expectedTotal, `the expected price ${expectedTotal}   the actual ${text.replace("SAR", '').trim()}`)
@@ -31,6 +38,7 @@ class Billing {
       //    });
       this.billingSubmit().click()
       cy.wait(4000)
+      cy.xpath(`//*[text()='Card Number']`).should('be.visible')
 
 
    }
