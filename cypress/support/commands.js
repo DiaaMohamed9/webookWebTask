@@ -46,10 +46,22 @@ Cypress.Commands.add('signup', (counterr) => {
       cy.visit('https://webook.com/en/login')
       login.createAccountButton().should('be.visible').click()
       signup.fillSigupForm(counterr)
-      cy.wait('@registerApi').its('response.statusCode').should('eq', 200);
     },
     {
       validate() {
+        cy.wait('@registerApi').then((interception) => {
+          const { statusCode, body } = interception.response;
+        
+          // Check that the status code is 200
+          expect(statusCode).to.eq(200);
+        
+          // Ensure that the response body does not have an error
+          expect(body).to.not.have.property('error');
+          expect(body.status).to.not.eq('error');
+          // Optionally, you can check for specific error cases if needed
+          expect(body.error?.user).to.not.equal("User Already exists");
+        });  
+        
         cy.visit('https://webook.com/shop/en/')
         cy.xpath("//a[contains(@href,'/my-account') and *[contains(text(),'My Account')]]").should('be.visible')
 

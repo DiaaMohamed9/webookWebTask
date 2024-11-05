@@ -6,6 +6,7 @@ module.exports = {
    billingState: '//input[@id="billing_state"]',
    billingPhone: '//input[@id="billing_phone"]',
    billingEmail: '//input[@id="billing_email"]',
-   billingSubmit: '//button[@id="place_order"]'
+   billingSubmit: '//button[@id="place_order"]',
+   billingAdditionalAddress: '//input[@id="billing_additional_address_details"]',
    // Add any other necessary selectors here
 }
